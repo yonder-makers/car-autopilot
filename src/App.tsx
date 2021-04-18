@@ -1,9 +1,10 @@
-import { Card, Col, Radio, Row, Slider, Space } from 'antd';
-import React, { useCallback, useEffect, useState } from 'react';
+import { Button, Card, Col, Radio, Row, Slider, Space } from 'antd';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import './App.css';
 import { Chart } from './Chart';
 import { SimulatorHook, useSimulator } from './domain/use-simulator';
 import { throttle as _throttle } from 'lodash';
+import { differenceInSeconds } from 'date-fns';
 
 export function App() {
   const simulator = useSimulator();
@@ -59,6 +60,62 @@ function ControlPanel({ simulator }: ControlPanelProps) {
   );
 }
 
+interface AdjustTimeState {
+  startTime: Date;
+  endTime?: Date;
+  hitCount: number;
+}
+function useAdjustTime(
+  targetSpeed: number,
+  currentSpeed: number,
+  simTime: number,
+) {
+  const [state, setState] = useState<AdjustTimeState>({
+    startTime: new Date(),
+    hitCount: 0,
+  });
+
+  useEffect(() => {
+    setState((oldState) => {
+      return {
+        ...oldState,
+        startTime: new Date(),
+        endTime: undefined,
+        hitCount: 0,
+      };
+    });
+  }, [targetSpeed]);
+
+  useEffect(() => {
+    if (Math.abs(targetSpeed - currentSpeed) < 2) {
+      setState((oldState) => {
+        const newState = {
+          ...oldState,
+          hitCount: oldState.hitCount + 1,
+        };
+        if (newState.hitCount === 1) {
+          newState.endTime = new Date();
+        }
+
+        return newState;
+      });
+    } else if (state.hitCount > 0) {
+      setState((oldState) => {
+        return { ...oldState, endTime: undefined, hitCount: 0 };
+      });
+    }
+  }, [simTime]);
+
+  const adjustingTime = useMemo(() => {
+    if (state.endTime) {
+      return differenceInSeconds(state.endTime, state.startTime);
+    }
+
+    return differenceInSeconds(new Date(), state.startTime);
+  }, [simTime]);
+  return { adjustingTime, hitCount: state.hitCount };
+}
+
 interface AutoPilotProps {
   simulator: SimulatorHook;
 }
@@ -66,6 +123,8 @@ function AutoPilot({ simulator }: AutoPilotProps) {
   const { speed, time, throttle, setThrottle } = simulator;
 
   const [targetSpeed, setTargetSpeed] = useState(Math.floor(speed));
+
+  const { adjustingTime, hitCount } = useAdjustTime(targetSpeed, speed, time);
 
   useEffect(() => {
     if (speed > targetSpeed) {
@@ -77,14 +136,23 @@ function AutoPilot({ simulator }: AutoPilotProps) {
 
   return (
     <Card title="Autopilot">
-      Target speed: {targetSpeed}
-      <Slider
-        min={0}
-        max={200}
-        onChange={setTargetSpeed}
-        value={targetSpeed}
-        style={{ width: 200 }}
-      />
+      <div>Target speed: {targetSpeed}</div>
+      <Space>
+        <Slider
+          min={0}
+          max={200}
+          onChange={setTargetSpeed}
+          value={targetSpeed}
+          style={{ width: 200 }}
+        />
+        <Button onClick={() => setTargetSpeed(50)}>50</Button>
+        <Button onClick={() => setTargetSpeed(90)}>90</Button>
+        <Button onClick={() => setTargetSpeed(130)}>130</Button>
+      </Space>
+      <div>
+        Adjusting time: {adjustingTime}{' '}
+        {hitCount && <span>(hit: {hitCount})</span>}
+      </div>
     </Card>
   );
 }

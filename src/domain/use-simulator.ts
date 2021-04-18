@@ -34,7 +34,7 @@ function getThrottleImpact(
 }
 
 let simulator: Simulator = {
-  throttle: 100,
+  throttle: 0,
   angle: 0,
   speed: 0,
   time: 0,
