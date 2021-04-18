@@ -28,7 +28,7 @@ export function useAdjustTime(
   }, [targetSpeed]);
 
   useEffect(() => {
-    if (Math.abs(targetSpeed - currentSpeed) < 2) {
+    if (Math.abs(targetSpeed - currentSpeed) < 0.5) {
       setState((oldState) => {
         const newState = {
           ...oldState,

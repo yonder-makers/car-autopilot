@@ -1,5 +1,6 @@
-import { Card, Slider, Space } from 'antd';
+import { Button, Card, Slider, Space } from 'antd';
 import React from 'react';
+import { usePersistConfig } from '../domain/use-persisted-config';
 import { SimulatorHook } from '../domain/use-simulator';
 
 interface EnvironmentProps {
@@ -14,8 +15,18 @@ export function Environment({ simulator }: EnvironmentProps) {
     horsePower,
     setHorsePower,
   } = simulator;
+
+  usePersistConfig('wind', wind, setWind);
+  usePersistConfig('angle', angle, setAngle);
+  usePersistConfig('horsePower', horsePower, setHorsePower);
+
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
+      <Card>
+        <Button onClick={() => simulator.setIsPaused(!simulator.isPaused)}>
+          {simulator.isPaused ? 'Continue' : 'Pause simulator'}
+        </Button>
+      </Card>
       <Card>
         Horse power: {horsePower}
         <Slider

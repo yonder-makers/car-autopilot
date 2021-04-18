@@ -5,11 +5,12 @@ export interface Simulator {
   wind: number;
   angle: number;
   speed: number;
-  time: number;
+  simTime: number;
   horsePower: number;
+  isPaused: boolean;
 }
 
-export const INTERVAL = 500;
+export const INTERVAL = 300;
 
 function getWindImpact(speed: number, wind: number) {
   const cumulative = speed + wind;
@@ -37,9 +38,10 @@ let simulator: Simulator = {
   throttle: 0,
   angle: 0,
   speed: 0,
-  time: 0,
+  simTime: 0,
   wind: 20,
   horsePower: 200,
+  isPaused: false,
 };
 
 export interface SimulatorHook extends Simulator {
@@ -47,11 +49,16 @@ export interface SimulatorHook extends Simulator {
   setWind(value: number): void;
   setAngle(value: number): void;
   setHorsePower(value: number): void;
+  setIsPaused(value: boolean): void;
 }
 export function useSimulator(): SimulatorHook {
   const [data, setData] = useState<Simulator>(simulator);
 
   useEffect(() => {
+    if (data.isPaused) {
+      return undefined;
+    }
+
     const interval = setInterval(() => {
       setData((oldSim) => {
         const impact =
@@ -62,15 +69,16 @@ export function useSimulator(): SimulatorHook {
 
         return {
           ...oldSim,
-          time: oldSim.time + 1,
+          simTime: oldSim.simTime + 1,
           speed: Math.max(0, oldSim.speed + impact),
         };
       });
     }, INTERVAL);
+
     return function cleanup() {
       clearInterval(interval);
     };
-  }, []);
+  }, [data.isPaused]);
 
   function setThrottle(value: number) {
     setData((oldSim) => {
@@ -108,11 +116,21 @@ export function useSimulator(): SimulatorHook {
     });
   }
 
+  function setIsPaused(value: boolean) {
+    setData((oldSim) => {
+      return {
+        ...oldSim,
+        isPaused: value,
+      };
+    });
+  }
+
   return {
     ...data,
     setThrottle,
     setWind,
     setAngle,
     setHorsePower,
+    setIsPaused,
   };
 }

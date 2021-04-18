@@ -7,13 +7,13 @@ interface GraphicsProps {
   simulator: SimulatorHook;
 }
 export function Graphics({ simulator }: GraphicsProps) {
-  const { speed, time, throttle } = simulator;
+  const { speed, simTime: time, throttle } = simulator;
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
       <Card>
         <RealtimeChart
-          title={'Speed: ' + Math.floor(speed)}
+          title={'Speed: ' + Math.round(speed)}
           simTime={time}
           currentValue={speed}
           min={0}
@@ -22,7 +22,7 @@ export function Graphics({ simulator }: GraphicsProps) {
       </Card>
       <Card>
         <RealtimeChart
-          title={'Throttle: ' + throttle}
+          title={'Throttle: ' + Math.round(throttle)}
           simTime={time}
           currentValue={throttle}
           min={0}

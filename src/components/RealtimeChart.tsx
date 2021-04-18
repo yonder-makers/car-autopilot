@@ -1,5 +1,5 @@
 import { ApexOptions } from 'apexcharts';
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import ApexCharts from 'react-apexcharts';
 import { INTERVAL } from '../domain/use-simulator';
 import { useTrackHistory } from '../domain/use-tracking-history';
@@ -11,7 +11,8 @@ interface ChartProps {
   max?: number;
   title: string;
 }
-export function RealtimeChart(props: ChartProps) {
+
+function RealtimeChartPure(props: ChartProps) {
   const { data } = useTrackHistory(props.simTime, props.currentValue);
 
   const options: ApexOptions = useMemo(() => {
@@ -48,7 +49,7 @@ export function RealtimeChart(props: ChartProps) {
       },
       xaxis: {
         type: 'numeric',
-        range: 50,
+        range: 100,
         // range: XAXISRANGE,
       },
       yaxis: {
@@ -72,3 +73,7 @@ export function RealtimeChart(props: ChartProps) {
     <ApexCharts options={options} series={series} type="line" height={350} />
   );
 }
+
+export const RealtimeChart = memo(RealtimeChartPure, (prev, next) => {
+  return prev.simTime === next.simTime;
+});

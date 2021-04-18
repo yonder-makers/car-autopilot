@@ -1,5 +1,6 @@
 import { Card, Radio, Slider, Space } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { usePersistConfig } from '../domain/use-persisted-config';
 import { SimulatorHook } from '../domain/use-simulator';
 import { AutoPilot } from './AutoPilot';
 
@@ -9,6 +10,8 @@ interface ControlPanelProps {
 export function ControlPanel({ simulator }: ControlPanelProps) {
   const { throttle, setThrottle } = simulator;
   const [controlMode, setControlMode] = useState(1);
+
+  usePersistConfig('control-mode', controlMode, setControlMode);
 
   return (
     <Space direction="vertical">
