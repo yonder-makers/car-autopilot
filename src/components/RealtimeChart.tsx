@@ -1,34 +1,18 @@
-import ApexCharts from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { useEffect, useMemo, useState } from 'react';
-import { INTERVAL } from './domain/use-simulator';
+import { useMemo } from 'react';
+import ApexCharts from 'react-apexcharts';
+import { INTERVAL } from '../domain/use-simulator';
+import { useTrackHistory } from '../domain/use-tracking-history';
 
-function useTrackHistory(value: Value) {
-  const [data, setData] = useState([value.value]);
-
-  useEffect(() => {
-    console.log(value);
-    setData((oldData) => {
-      const newData = [...oldData, Math.floor(value.value)];
-      return newData;
-    });
-  }, [value.id]);
-
-  return { data };
-}
-
-interface Value {
-  id: number;
-  value: number;
-}
 interface ChartProps {
-  currentValue: Value;
+  simTime: number;
+  currentValue: number;
   min?: number;
   max?: number;
   title: string;
 }
-export function Chart(props: ChartProps) {
-  const { data } = useTrackHistory(props.currentValue);
+export function RealtimeChart(props: ChartProps) {
+  const { data } = useTrackHistory(props.simTime, props.currentValue);
 
   const options: ApexOptions = useMemo(() => {
     return {
