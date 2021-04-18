@@ -3,10 +3,10 @@ import React, { useEffect } from 'react';
 import { AutopilotHook } from '../domain/use-autopilot';
 import { usePersistConfig } from '../domain/use-persisted-config';
 
-interface PidControlsProps {
+interface PidDiagProps {
   autopilot: AutopilotHook;
 }
-export function PidControls({ autopilot }: PidControlsProps) {
+export function PidControls({ autopilot }: PidDiagProps) {
   const { config } = autopilot;
 
   usePersistConfig('pid-controls', config, autopilot.setCoeficients);
