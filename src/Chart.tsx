@@ -9,13 +9,7 @@ function useTrackHistory(value: Value) {
   useEffect(() => {
     console.log(value);
     setData((oldData) => {
-      // if (oldData.length < 20) {
-      //   oldData = [...new Array(21)].map((_, i) => 0);
-      // }
       const newData = [...oldData, Math.floor(value.value)];
-      // if (newData.length > 20) {
-      //   newData.shift();
-      // }
       return newData;
     });
   }, [value.id]);

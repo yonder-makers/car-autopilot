@@ -93,9 +93,26 @@ interface EnvironmentProps {
   simulator: SimulatorHook;
 }
 function Environment({ simulator }: EnvironmentProps) {
-  const { wind, setWind, angle, setAngle } = simulator;
+  const {
+    wind,
+    setWind,
+    angle,
+    setAngle,
+    horsePower,
+    setHorsePower,
+  } = simulator;
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
+      <Card>
+        Horse power: {horsePower}
+        <Slider
+          min={0}
+          max={400}
+          onChange={setHorsePower}
+          value={horsePower}
+          style={{ width: '100%' }}
+        />
+      </Card>
       <Card>
         Wind speed: {wind}
         <Slider

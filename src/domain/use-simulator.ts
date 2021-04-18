@@ -6,6 +6,7 @@ export interface Simulator {
   angle: number;
   speed: number;
   time: number;
+  horsePower: number;
 }
 
 export const INTERVAL = 500;
@@ -23,8 +24,13 @@ function getAngleImpact(angle: number) {
   return angle / (1000 / INTERVAL);
 }
 
-function getThrottleImpact(speed: number, throttle: number) {
-  return ((300 - speed) * throttle) / 600 / (1000 / INTERVAL);
+function getThrottleImpact(
+  horsePower: number,
+  speed: number,
+  throttle: number,
+) {
+  const power = 600 * (300 / horsePower);
+  return ((300 - speed) * throttle) / power / (1000 / INTERVAL);
 }
 
 let simulator: Simulator = {
@@ -33,12 +39,14 @@ let simulator: Simulator = {
   speed: 0,
   time: 0,
   wind: 20,
+  horsePower: 200,
 };
 
 export interface SimulatorHook extends Simulator {
   setThrottle(value: number): void;
   setWind(value: number): void;
   setAngle(value: number): void;
+  setHorsePower(value: number): void;
 }
 export function useSimulator(): SimulatorHook {
   const [data, setData] = useState<Simulator>(simulator);
@@ -47,7 +55,7 @@ export function useSimulator(): SimulatorHook {
     const interval = setInterval(() => {
       setData((oldSim) => {
         const impact =
-          getThrottleImpact(oldSim.speed, oldSim.throttle) -
+          getThrottleImpact(oldSim.horsePower, oldSim.speed, oldSim.throttle) -
           getOtherImpact() -
           getWindImpact(oldSim.speed, oldSim.wind) -
           getAngleImpact(oldSim.angle);
@@ -91,10 +99,20 @@ export function useSimulator(): SimulatorHook {
     });
   }
 
+  function setHorsePower(value: number) {
+    setData((oldSim) => {
+      return {
+        ...oldSim,
+        horsePower: value,
+      };
+    });
+  }
+
   return {
     ...data,
     setThrottle,
     setWind,
     setAngle,
+    setHorsePower,
   };
 }
