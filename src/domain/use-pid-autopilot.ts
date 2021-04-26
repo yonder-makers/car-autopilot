@@ -1,21 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { INTERVAL, SimulatorHook } from './use-simulator';
 
-/*
-
-    // the desired value and the actual value
-    const error = setpoint - PV;
-    // track error over time, scaled to the timer interval
-    integral = integral + error * Dt;
-    // determine the amount of change from the last time checked
-    derivative = (error - preError) / Dt;
-    // calculate how much to drive the output in order to get to the
-    // desired setpoint.
-    output = Kp * error + Ki * integral + Kd * derivative;
-    // remember the error for the next time around.
-    preError = error;
-*/
-
 interface AutopilotState {
   error: number;
   integral: number;
@@ -36,7 +21,7 @@ export interface AutopilotHook extends AutopilotState {
 
 const TIME_DIFF = INTERVAL / 1000;
 
-export function useAutopilot(
+export function usePidAutopilot(
   simulator: SimulatorHook,
   targetSpeed: number,
 ): AutopilotHook {
@@ -83,9 +68,3 @@ export function useAutopilot(
     setCoeficients,
   };
 }
-
-// if (simulator.speed > targetSpeed) {
-//   simulator.setThrottle(0);
-// } else if (simulator.speed < targetSpeed) {
-//   simulator.setThrottle(100);
-// }

@@ -1,4 +1,3 @@
-import { Card } from 'antd';
 import { ApexOptions } from 'apexcharts';
 import React, { useMemo } from 'react';
 import ApexCharts from 'react-apexcharts';
@@ -42,8 +41,6 @@ export function AiDiag(props: AiDiagProps) {
       },
       xaxis: {
         type: 'numeric',
-        // range: 100,
-        // range: XAXISRANGE,
       },
       yaxis: {
         max: 0.5,

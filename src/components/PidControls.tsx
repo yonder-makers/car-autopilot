@@ -1,7 +1,7 @@
 import { Card, Slider } from 'antd';
-import React, { useEffect } from 'react';
-import { AutopilotHook } from '../domain/use-autopilot';
+import React from 'react';
 import { usePersistConfig } from '../domain/use-persisted-config';
+import { AutopilotHook } from '../domain/use-pid-autopilot';
 
 interface PidDiagProps {
   autopilot: AutopilotHook;
