@@ -1,7 +1,7 @@
 import { Card, Radio, Slider, Space } from 'antd';
 import React, { useState } from 'react';
-import { usePersistConfig } from '../domain/use-persisted-config';
-import { SimulatorHook } from '../domain/use-simulator';
+import { usePersistConfig } from '../hooks/use-persisted-config';
+import { SimulatorHook } from '../hooks/use-simulator';
 import { AiPilot } from './AiPilot';
 import { DumbAutoPilot } from './DumbAutoPilot';
 import { PidPilot } from './PidPilot';

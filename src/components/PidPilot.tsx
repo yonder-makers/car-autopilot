@@ -1,8 +1,8 @@
 import { Card, Space } from 'antd';
 import React, { useState } from 'react';
-import { useAdjustTime } from '../domain/use-adjusted-time';
-import { usePidAutopilot } from '../domain/use-pid-autopilot';
-import { SimulatorHook } from '../domain/use-simulator';
+import { useAdjustTime } from '../hooks/use-adjusted-time';
+import { usePidAutopilot } from '../hooks/use-pid-autopilot';
+import { SimulatorHook } from '../hooks/use-simulator';
 import { PidControls } from './PidControls';
 import { PidDiag } from './PidDiag';
 import { TargetSpeedSetter } from './TargetSpeedSetter';

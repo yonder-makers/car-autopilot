@@ -4,7 +4,7 @@ import './App.css';
 import { ControlPanel } from './components/ControlPanel';
 import { Environment } from './components/Environment';
 import { Graphics } from './components/Graphics';
-import { useSimulator } from './domain/use-simulator';
+import { useSimulator } from './hooks/use-simulator';
 
 export function App() {
   const simulator = useSimulator();

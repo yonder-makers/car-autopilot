@@ -1,8 +1,8 @@
 import { ApexOptions } from 'apexcharts';
 import { memo, useMemo } from 'react';
 import ApexCharts from 'react-apexcharts';
-import { INTERVAL } from '../domain/use-simulator';
-import { useTrackHistory } from '../domain/use-tracking-history';
+import { INTERVAL } from '../hooks/use-simulator';
+import { useTrackHistory } from '../hooks/use-tracking-history';
 
 interface ChartProps {
   simTime: number;

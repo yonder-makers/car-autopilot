@@ -1,7 +1,7 @@
 import { Card, Radio, Space } from 'antd';
 import React, { useState } from 'react';
-import { LearningMode, useAiPilot } from '../domain/use-ai-pilot';
-import { SimulatorHook } from '../domain/use-simulator';
+import { LearningMode, useAiPilot } from '../hooks/use-ai-pilot';
+import { SimulatorHook } from '../hooks/use-simulator';
 import { AiDiag } from './AiDiag';
 import { TargetSpeedSetter } from './TargetSpeedSetter';
 

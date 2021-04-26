@@ -1,7 +1,7 @@
 import { Button, Card, Slider, Space } from 'antd';
 import React from 'react';
-import { usePersistConfig } from '../domain/use-persisted-config';
-import { SimulatorHook } from '../domain/use-simulator';
+import { usePersistConfig } from '../hooks/use-persisted-config';
+import { SimulatorHook } from '../hooks/use-simulator';
 
 interface EnvironmentProps {
   simulator: SimulatorHook;

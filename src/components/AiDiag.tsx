@@ -1,7 +1,7 @@
 import { ApexOptions } from 'apexcharts';
 import React, { useMemo } from 'react';
 import ApexCharts from 'react-apexcharts';
-import { INTERVAL } from '../domain/use-simulator';
+import { INTERVAL } from '../hooks/use-simulator';
 
 interface AiDiagProps {
   expectedErrors: number[];

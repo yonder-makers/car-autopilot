@@ -1,7 +1,7 @@
 import { Card, Space } from 'antd';
 import React from 'react';
 import { RealtimeChart } from './RealtimeChart';
-import { SimulatorHook } from '../domain/use-simulator';
+import { SimulatorHook } from '../hooks/use-simulator';
 
 interface GraphicsProps {
   simulator: SimulatorHook;

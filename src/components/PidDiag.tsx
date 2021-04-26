@@ -1,6 +1,6 @@
 import { Card } from 'antd';
 import React from 'react';
-import { AutopilotHook } from '../domain/use-pid-autopilot';
+import { AutopilotHook } from '../hooks/use-pid-autopilot';
 
 interface PidControlsProps {
   autopilot: AutopilotHook;

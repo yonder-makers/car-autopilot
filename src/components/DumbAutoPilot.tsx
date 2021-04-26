@@ -1,7 +1,7 @@
 import { Card } from 'antd';
 import React, { useState } from 'react';
-import { useDumbAutopilot } from '../domain/use-dumb-autopilot';
-import { SimulatorHook } from '../domain/use-simulator';
+import { useDumbAutopilot } from '../hooks/use-dumb-autopilot';
+import { SimulatorHook } from '../hooks/use-simulator';
 import { TargetSpeedSetter } from './TargetSpeedSetter';
 
 interface AutoPilotProps {
