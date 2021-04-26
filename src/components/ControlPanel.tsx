@@ -1,9 +1,10 @@
 import { Card, Radio, Slider, Space } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { usePersistConfig } from '../domain/use-persisted-config';
 import { SimulatorHook } from '../domain/use-simulator';
-import { AutoPilot } from './AutoPilot';
+import { AiPilot } from './AiPilot';
 import { DumbAutoPilot } from './DumbAutoPilot';
+import { PidPilot } from './PidPilot';
 
 interface ControlPanelProps {
   simulator: SimulatorHook;
@@ -15,7 +16,7 @@ export function ControlPanel({ simulator }: ControlPanelProps) {
   usePersistConfig('control-mode', controlMode, setControlMode);
 
   return (
-    <Space direction="vertical">
+    <Space direction="vertical" style={{ width: '100%' }}>
       <Card>
         Mode:
         <Radio.Group
@@ -25,6 +26,7 @@ export function ControlPanel({ simulator }: ControlPanelProps) {
           <Radio value={1}>Manual</Radio>
           <Radio value={2}>Dumb Autopilot</Radio>
           <Radio value={3}>Autopilot</Radio>
+          <Radio value={4}>AI pilot</Radio>
         </Radio.Group>
         <Space style={{ width: '100%' }}>
           Throttle:
@@ -41,7 +43,8 @@ export function ControlPanel({ simulator }: ControlPanelProps) {
       {controlMode === 2 && (
         <DumbAutoPilot simulator={simulator}></DumbAutoPilot>
       )}
-      {controlMode === 3 && <AutoPilot simulator={simulator}></AutoPilot>}
+      {controlMode === 3 && <PidPilot simulator={simulator}></PidPilot>}
+      {controlMode === 4 && <AiPilot simulator={simulator}></AiPilot>}
     </Space>
   );
 }

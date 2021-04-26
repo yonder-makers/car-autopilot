@@ -11,7 +11,7 @@ export function TargetSpeedSetter(props: TargetSpeedSetterProps) {
   return (
     <>
       <div>Target speed: {targetSpeed}</div>
-      <Space>
+      <Space wrap>
         <Slider
           min={0}
           max={200}

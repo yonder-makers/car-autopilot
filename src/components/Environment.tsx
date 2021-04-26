@@ -23,8 +23,11 @@ export function Environment({ simulator }: EnvironmentProps) {
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
       <Card>
-        <Button onClick={() => simulator.setIsPaused(!simulator.isPaused)}>
-          {simulator.isPaused ? 'Continue' : 'Pause simulator'}
+        <Button
+          onClick={() => simulator.setIsPaused(!simulator.isPaused)}
+          style={{ width: '100%' }}
+        >
+          {simulator.isPaused ? 'Continue' : 'Pause'}
         </Button>
       </Card>
       <Card>

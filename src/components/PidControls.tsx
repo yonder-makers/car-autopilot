@@ -20,7 +20,7 @@ export function PidControls({ autopilot }: PidDiagProps) {
         step={0.01}
         onChange={(v: number) => autopilot.setCoeficients({ ...config, p: v })}
         value={config.p}
-        style={{ width: 400 }}
+        style={{ width: 400, maxWidth: '100%' }}
       />
       <div>i: {config.i}</div>
       <Slider
@@ -29,7 +29,7 @@ export function PidControls({ autopilot }: PidDiagProps) {
         step={0.01}
         onChange={(v: number) => autopilot.setCoeficients({ ...config, i: v })}
         value={config.i}
-        style={{ width: 400 }}
+        style={{ width: 400, maxWidth: '100%' }}
       />
       <div>d: {config.d}</div>
       <Slider
@@ -38,7 +38,7 @@ export function PidControls({ autopilot }: PidDiagProps) {
         step={0.01}
         onChange={(v: number) => autopilot.setCoeficients({ ...config, d: v })}
         value={config.d}
-        style={{ width: 400 }}
+        style={{ width: 400, maxWidth: '100%' }}
       />
     </Card>
   );

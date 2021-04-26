@@ -1,4 +1,4 @@
-import { Button, Card, Slider, Space } from 'antd';
+import { Card, Space } from 'antd';
 import React, { useState } from 'react';
 import { useAdjustTime } from '../domain/use-adjusted-time';
 import { useAutopilot } from '../domain/use-autopilot';
@@ -7,10 +7,10 @@ import { PidControls } from './PidControls';
 import { PidDiag } from './PidDiag';
 import { TargetSpeedSetter } from './TargetSpeedSetter';
 
-interface AutoPilotProps {
+interface PidPilotProps {
   simulator: SimulatorHook;
 }
-export function AutoPilot({ simulator }: AutoPilotProps) {
+export function PidPilot({ simulator }: PidPilotProps) {
   const { speed, simTime: time } = simulator;
 
   const [targetSpeed, setTargetSpeed] = useState(Math.floor(speed));
